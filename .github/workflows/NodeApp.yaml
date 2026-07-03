@@ -1,7 +1,26 @@
 name: Basic_Node_Pipeline
 
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
 
+    inputs:
+      Environment: 
+        description: "Choose which environment to use/deploy"
+        required: true
+        default: "Development"
+        type: choice
+        options:
+          - Production
+          - Development
+      Port:
+        description: "Dev=8080 & Prod=5000"
+        required: true
+        default: "8080"
+        type: choice
+        options:
+          - 5000
+          - 8080
+  
 jobs:
   Running-Node-App:
     runs-on: ["self-hosted" , "wsl-sakthi"]
@@ -20,7 +39,7 @@ jobs:
 
       - name: Run Application
         run: |
-          node app.js &
+          node app.js ${{ github.event.inputs.Environment }} &
           sleep 5
-          curl http://localhost:8080
+          curl http://localhost:${{ github.event.inputs.Port }}
           pkill -f "node app.js"

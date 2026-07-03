@@ -1,4 +1,4 @@
-name: Test_pipeline
+name: Test_pipeline_push
 
 on:
   push:

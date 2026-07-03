@@ -6,7 +6,7 @@ on:
 
 jobs:
   demo-pull:
-    runs-on: [self-hosted" , "wsl-sakthi"]
+    runs-on: ["self-hosted" , "wsl-sakthi"]
 
     steps:
       - name: Testing Pipeline

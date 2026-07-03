@@ -10,8 +10,8 @@ on:
         default: "Development"
         type: choice
         options:
-          - Production
-          - Development
+          - production
+          - development
       Port:
         description: "Dev=8080 & Prod=5000"
         required: true

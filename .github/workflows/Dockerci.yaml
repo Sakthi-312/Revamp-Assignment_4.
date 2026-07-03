@@ -19,14 +19,14 @@ jobs:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Build Docker Image
+      - name: Building Docker_Image
         run: docker build -f Dockerfile-multistage -t dockerfile .
 
-      - name: Tagging the Docker Image created
+      - name: Tagging the Docker_Image
         id: tag
         run: |
            echo "sha=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
            docker tag dockerfile ${{ vars.DOCKERHUB_USERNAME }}/assignment-4:${GITHUB_SHA::7}
 
-      - name: Push Docker Image to Docker_Hub
+      - name: Push Docker_Image to DockerHub Repo
         run: docker push ${{ vars.DOCKERHUB_USERNAME }}/assignment-4:${{ steps.tag.outputs.sha }}

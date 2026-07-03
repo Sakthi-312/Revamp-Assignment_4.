@@ -9,6 +9,11 @@ jobs:
     steps:
       - name: Cloning_Code
         uses: actions/checkout@v7
+        
+      - name: Installing Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
 
       - name: Installing Dependencies
         run: npm install

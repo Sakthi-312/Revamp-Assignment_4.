@@ -2,7 +2,7 @@ name: SonarQube_Pipeline
 
 on: 
   pull_request:
-    branches: ["main"]
+    branches: ["main-1"]
   workflow_dispatch: 
 
 jobs:

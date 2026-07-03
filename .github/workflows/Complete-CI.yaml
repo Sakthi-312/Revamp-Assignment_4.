@@ -28,6 +28,7 @@ jobs:
   Docker-CI:
     runs-on: [self-hosted , wsl-sakthi]
     if: github.event_name == 'push'|| github.event_name == 'workflow_dispatch'
+    environment: Prod
 
     steps:
       - name: Cloning Code

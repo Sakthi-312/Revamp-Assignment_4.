@@ -1,0 +1,42 @@
+name: Complete_CI_Pipeline_With_Actions
+
+on: 
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch: 
+
+jobs:
+  SonarQube:
+    runs-on: [self-hosted , wsl-sakthi]
+    if: github.event_name == 'pull_request' 
+
+    steps:
+      - name: Cloning Code
+        uses: actions/checkout@v7
+
+      - name: Run SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v8
+        with:
+          args: >
+            -Dsonar.projectKey=NodeApp 
+            -Dsonar.sources=. 
+            -Dsonar.host.url=${{ vars.SONAR_LOGIN_URL }}
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+            -Dsonar.qualitygate.wait=true
+  Docker-CI:
+    runs-on: [self-hosted , wsl-sakthi]
+    if: github.event_name == 'push'|| github.event_name == 'workflow_dispatch'
+    environment: Prod
+
+    steps:
+      - name: Cloning Code
+        uses: actions/checkout@v7
+
+      - name: Dockerhub Login Build and Push
+        uses: Sakthi-312/Revamp-Assignment_4./.github/actions/Docker-Build-Push@main
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      

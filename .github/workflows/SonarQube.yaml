@@ -19,6 +19,5 @@ jobs:
           args: >
             -Dsonar.projectKey=NodeApp 
             -Dsonar.sources=. 
-            -Dsonar.host.url=https://trembling-underdone-dynasty.ngrok-free.dev
-            -Dsonar.login=sqp_3e47819f61210aa1ff723b5663b666ebcc2f72b6
-                      
+            -Dsonar.host.url=${{ vars.SONAR_LOGIN_URL }}
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}

@@ -2,7 +2,7 @@ name: Docker_Build & Push_Pipeline
 
 on: 
   #push: 
-    #branches: ["main"]
+    #branches: ["main-1"]
   workflow_dispatch: 
 
 jobs:

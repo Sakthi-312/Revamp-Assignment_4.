@@ -1,9 +1,9 @@
-name: Basic Node Pipeline
+name: Basic_Node_Pipeline
 
 on: workflow_dispatch
 
 jobs:
-  node:
+  Running-Node-App:
     runs-on: ["self-hosted" , "wsl-sakthi"]
 
     steps:
@@ -15,5 +15,7 @@ jobs:
 
       - name: Run Application
         run: |
-          node app.js
+          node app.js &
+          sleep 5
           curl http:localhost:8080
+          pkill -f "node app.js"

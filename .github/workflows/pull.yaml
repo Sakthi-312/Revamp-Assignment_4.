@@ -1,0 +1,14 @@
+name: Test_Pipeline_Pull
+
+on: 
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  demo-pull:
+    runs-on: [self-hosted" , "wsl-sakthi"]
+
+    steps:
+      - name: Testing Pipeline
+      run: echo "Pull Pipeline Success"
+      

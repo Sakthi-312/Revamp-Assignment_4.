@@ -1,0 +1,24 @@
+name: SonarQube_Pipeline
+
+on: 
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch: 
+
+jobs:
+  SonarQube:
+    runs-on: [self-hosted , wsl-sakthi]
+
+    steps:
+      - name: Cloning Code
+        uses: actions/checkout@v7
+
+      - name: Run SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v8
+        with:
+          args: >
+            -Dsonar.projectKey=NodeApp 
+            -Dsonar.sources=. 
+            -Dsonar.host.url=https://trembling-underdone-dynasty.ngrok-free.dev
+            -Dsonar.login=sqp_3e47819f61210aa1ff723b5663b666ebcc2f72b6
+                      

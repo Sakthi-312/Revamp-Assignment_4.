@@ -1,0 +1,19 @@
+name: Basic Node Pipeline
+
+on: workflow_dispatch
+
+jobs:
+  node:
+    runs-on: ["self-hosted" , "wsl-sakthi"]
+
+    steps:
+      - name: Cloning_Code
+        uses: actions/checkout@v7
+
+      - name: Installing Dependencies
+        run: npm install
+
+      - name: Run Application
+        run: |
+          node app.js
+          curl http:localhost:8080

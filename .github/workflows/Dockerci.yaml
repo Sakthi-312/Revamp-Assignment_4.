@@ -26,7 +26,7 @@ jobs:
         id: tag
         run: |
            echo "sha=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
-           docker tag dockerfile ${{ vars.DOCKERHUB_USERNAME }}/nodeapp4:${GITHUB_SHA::7}
+           docker tag dockerfile ${{ vars.DOCKERHUB_USERNAME }}/assignment-4:${GITHUB_SHA::7}
 
       - name: Push Docker Image to Docker_Hub
         run: docker push ${{ vars.DOCKERHUB_USERNAME }}/assignment-4:${{ steps.tag.outputs.sha }}

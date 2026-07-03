@@ -2,9 +2,9 @@ name: Complete_CI_Pipeline
 
 on: 
   push:
-    branches: ["main"]
+    branches: ["main-1"]
   pull_request:
-    branches: ["main"]
+    branches: ["main-1"]
   workflow_dispatch: 
 
 jobs:

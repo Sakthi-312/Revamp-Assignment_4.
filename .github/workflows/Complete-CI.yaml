@@ -1,0 +1,46 @@
+name: Complete_CI_Pipeline
+
+on: 
+  workflow_dispatch: 
+
+jobs:
+  SonarQube:
+    runs-on: [self-hosted , wsl-sakthi]
+
+    steps:
+      - name: Cloning Code
+        uses: actions/checkout@v7
+
+      - name: Run SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v8
+        with:
+          args: >
+            -Dsonar.projectKey=NodeApp 
+            -Dsonar.sources=. 
+            -Dsonar.host.url=${{ vars.SONAR_LOGIN_URL }}
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+            -Dsonar.qualitygate.wait=true
+  Docker-CI:
+    runs-on: [self-hosted , wsl-sakthi]
+
+    steps:
+      - name: Cloning Code
+        uses: actions/checkout@v7
+
+      - name: DockerHub Login
+        uses: docker/login-action@v4
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Building Docker_Image
+        run: docker build -f Dockerfile-multistage -t dockerfile .
+
+      - name: Tagging the Docker_Image
+        id: tag
+        run: |
+           echo "sha=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+           docker tag dockerfile ${{ vars.DOCKERHUB_USERNAME }}/assignment-4:${GITHUB_SHA::7}
+
+      - name: Push Docker_Image to DockerHub Repo
+        run: docker push ${{ vars.DOCKERHUB_USERNAME }}/assignment-4:${{ steps.tag.outputs.sha }}          

@@ -1,0 +1,13 @@
+name: Test_pipeline
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  demo:
+    runs-on: ["self-hosted" , "wsl-sakthi"]
+
+    steps:
+      - name: Testing Pipeline
+        run: echo "Pipeline Check"

@@ -1,11 +1,16 @@
 name: Complete_CI_Pipeline
 
 on: 
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
   workflow_dispatch: 
 
 jobs:
   SonarQube:
     runs-on: [self-hosted , wsl-sakthi]
+    if: github.event_name == 'pull_request' 
 
     steps:
       - name: Cloning Code
@@ -22,6 +27,7 @@ jobs:
             -Dsonar.qualitygate.wait=true
   Docker-CI:
     runs-on: [self-hosted , wsl-sakthi]
+    if: github.event_name == 'push'|| github.event_name == 'workflow_dispatch'
 
     steps:
       - name: Cloning Code

@@ -1,0 +1,33 @@
+name: Docker-Action-File
+
+inputs:
+  username:
+    description: DockerHub username
+    required: true
+  password:
+    description: DockerHub password
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: DockerHub Login
+      uses: docker/login-action@v4
+      with:
+        username: ${{ inputs.username}}
+        password: ${{ inputs.password }}
+
+    - name: Building Docker_Image
+      shell: bash
+      run: docker build -f Dockerfile-multistage -t dockerfile .
+
+    - name: Tagging the Docker_Image
+      id: tag
+      shell: bash
+      run: |
+         echo "sha=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+         docker tag dockerfile ${{ inputs.username }}/assignment-4:${GITHUB_SHA::7}
+
+    - name: Push Docker_Image to DockerHub Repo
+      shell: bash
+      run: docker push ${{ inputs.username }}/assignment-4:${{ steps.tag.outputs.sha }}   
